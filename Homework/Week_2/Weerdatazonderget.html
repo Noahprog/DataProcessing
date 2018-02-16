@@ -527,6 +527,7 @@ Noah van Grinsven
             }
             ctx.stroke();
 
+            // put title and axis names in graph
             ctx. restore();
             ctx.font = "15px Arial";
             ctx.textAlign = "center";
@@ -536,7 +537,7 @@ Noah van Grinsven
             ctx.fillText("Month of the year", 0.5*canvas.width, canvas.height - 0.5 * margin)
             ctx.textAlign = "center";
             ctx.rotate(-Math.PI/2);
-            ctx.fillText("Temperature in °C", -0.5*canvas.height, 0.5*margin);
+            ctx.fillText("Temperature in 1/10°C", -0.5*canvas.height, 0.5*margin);
 
             function createTransform(domain, range){
                 // domain is a two-element array of the data bounds [domain_min, domain_max]
