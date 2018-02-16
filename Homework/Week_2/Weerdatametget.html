@@ -25,12 +25,13 @@ Noah van Grinsven
             xhttp.open("GET", "KNMI_data2010.csv", true);
             xhttp.send();
 
-            // once data is loaded
+            // once data is loaded start dataprocessing
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 & this.status == 200) {
-                    document.getElementById("rawdata").innerHTML = xhttp.responseText;
+                    text = xhttp.responseText;
 
-                    var dataPerLine = xhttp.response.value.split("\n");
+                    var dataPerLine = text.slice(text.lastIndexOf("#")+1).replace(/260,/g, "").split("\n");
+                    dataPerLine.shift();
 
                     // store datapoints
                     var dateData = [];
@@ -41,6 +42,7 @@ Noah van Grinsven
                     var timePoint;
                     for (i = 0; i < dataPerLine.length; i++) {
                         var splitLine = dataPerLine[i].split(",");
+                        console.log(splitLine)
                         // store temperatures
                         tempData.push(parseFloat(splitLine[1].trim()));
 
