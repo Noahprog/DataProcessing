@@ -66,7 +66,8 @@ def extract_tvseries(dom):
         runtimeint = re.findall('\d+', runtime)[0]
 
         # create comma-separated string for series and add to tvseries array
-        series.append(",".join([title, rating, genre, ",".join(actors), runtimeint]))
+        # series.append(",".join([title, rating, genre, ",".join(actors), runtimeint]))
+        series = [title, rating, genre, ",".join(actors), runtimeint]
         tvseries.append(series)
 
     return tvseries   # REPLACE THIS LINE AS WELL AS APPROPRIATE
