@@ -16,6 +16,11 @@ Dataprocessing week 3
     font: 15px sans-serif;
 }
 
+.scalelegendtitle {
+    font: 15px sans-serif;
+    text-anchor: middle;
+}
+
 .axis path,
 .axis line {
     fill: none;

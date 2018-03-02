@@ -152,7 +152,7 @@ d3.json("hpi-data-2016-use.json", function(error, data) {
             return Math.round(color.invertExtent(d)[1]);
         });
 
-    // legend title
+    // add legend title
     legend.append("text")
         .attr("class", "legendtitle")
         .attr("x", 0.675 * width + 2 * blocksize[0])
@@ -165,6 +165,14 @@ d3.json("hpi-data-2016-use.json", function(error, data) {
         .data(reference_values)
         .enter().append("g")
         .attr("class", "scalelegend");
+
+    // scalelegend title
+    scalelegend.append("text")
+        .attr("class", "scalelegendtitle")
+        .attr("x", margin.left + margin.right + width / 2)
+        .attr("y", - margin.top / 2 - 20)
+        .text("GDP per capita");
+
 
     scalelegend.append("circle")
         .attr("r", function (d) { return rscale(d); })
