@@ -87,7 +87,7 @@ d3.json("hpi-data-2016-use.json", function(error, data) {
         .attr("x", - 20)
         .attr("y", - margin.bottom)
         .attr("dy", ".71em")
-        .text("Avarage Life Expectancy (years");
+        .text("Avarage Life Expectancy (years)");
 
     // place dots in scatterplot, make it interactive
     scatter.selectAll(".dot")
