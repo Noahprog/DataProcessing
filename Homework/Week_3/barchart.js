@@ -76,7 +76,7 @@ d3.json("MaandregenDeBilt2015.json", function(error, data) {
     chart.append("text")
         .attr("class", "source")
         .attr("y", height + margin.top)
-        .text("Source: Koninklijk Nederlands Meteorologisch Instituut")
+        .text("Source: Koninklijk Nederlands Meteorologisch Instituut");
 
     // add the bars
     var bar = chart.selectAll(".bar")
