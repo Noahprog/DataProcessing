@@ -21,21 +21,21 @@ var barSize = d3.scale.linear()
 
 // make queue of all files
 queue()
-    .defer(d3.json, "data/2000.json")
-    .defer(d3.json, "data/2001.json")
-    .defer(d3.json, "data/2002.json")
-    .defer(d3.json, "data/2003.json")
-    .defer(d3.json, "data/2004.json")
-    .defer(d3.json, "data/2005.json")
-    .defer(d3.json, "data/2006.json")
-    .defer(d3.json, "data/2007.json")
-    .defer(d3.json, "data/2008.json")
-    .defer(d3.json, "data/2009.json")
-    .defer(d3.json, "data/2010.json")
-    .defer(d3.json, "data/2011.json")
-    .defer(d3.json, "data/2012.json")
-    .defer(d3.json, "data/2013.json")
-    .defer(d3.json, "data/2014.json")
+    .defer(d3.json, "Data/2000.json")
+    .defer(d3.json, "Data/2001.json")
+    .defer(d3.json, "Data/2002.json")
+    .defer(d3.json, "Data/2003.json")
+    .defer(d3.json, "Data/2004.json")
+    .defer(d3.json, "Data/2005.json")
+    .defer(d3.json, "Data/2006.json")
+    .defer(d3.json, "Data/2007.json")
+    .defer(d3.json, "Data/2008.json")
+    .defer(d3.json, "Data/2009.json")
+    .defer(d3.json, "Data/2010.json")
+    .defer(d3.json, "Data/2011.json")
+    .defer(d3.json, "Data/2012.json")
+    .defer(d3.json, "Data/2013.json")
+    .defer(d3.json, "Data/2014.json")
     .awaitAll(ready);
 
 function ready(error, data) {
@@ -45,13 +45,15 @@ function ready(error, data) {
         throw error;
     }
 
+    // set current year
+    var current = data[0];
+
     // initiate countries and years
     var codes = Object.keys(current),
         years = [],
         keys = {};
 
-    // set current year and selected country
-    var current = data[0];
+    // set selected country
     var selected = codes[0];
 
     // read data per year
