@@ -1,0 +1,56 @@
+/*
+Noah van Grinsven 10501916
+Dataprocessing week 3
+*/
+
+.title {
+    font: 30px sans-serif;
+    text-anchor: front;
+}
+.subtitle {
+    font: 15px sans-serif;
+    text-anchor: front;
+}
+
+.legendtitle {
+    font: 15px sans-serif;
+}
+
+.scalelegendtitle {
+    font: 15px sans-serif;
+    text-anchor: middle;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.axis .label {
+    font: 12px sans-serif;
+    font-weight: bold;
+
+}
+
+.axis text {
+    font: 11px sans-serif;
+    text-anchor: end;
+}
+
+.dot {
+    stroke: #000;
+}
+
+.tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(217, 222, 228, 0.8);
+    color: #000000;
+    border-radius: 5px;
+}
+
+
+
+

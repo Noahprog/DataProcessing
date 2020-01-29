@@ -1,0 +1,80 @@
+/*
+Noah van Grinsven 10501916
+Dataprocessing week 3
+*/
+
+.bartext
+{
+    alignment-baseline: middle;
+}
+
+.sourcetext
+{
+    alignment-baseline: middle;
+    text-anchor: end;
+}
+
+.countryname
+{
+    font: 18px sans-serif;
+    text-anchor: middle;
+}
+
+.consumption
+{
+    text-anchor: middle;
+    alignment-baseline: hanging;
+}
+
+.source
+{
+    font: 12px sans-serif;
+    alignment-baseline: ideographic;
+}
+
+.source a
+{
+    fill: #00e;
+    alignment-baseline: ideographic;
+}
+
+.source a:hover
+{
+    border-bottom: 1px solid #00e;
+}
+
+.main_block
+{
+    height: 500px;
+}
+
+.datamaps-legend h2
+{
+    font: 14px sans-serif;
+    font-weight: bold;
+    text-align: center;
+}
+
+.popup
+{
+    border-radius: 5px;
+    background-color: #f3f3f3;
+}
+
+.popup-col
+{
+    padding: 3px;
+}
+
+.story a
+{
+    font: 16px sans-serif;
+    font-weight: bold;
+    fill: #00e;
+    alignment-baseline: ideographic;
+}
+
+.story a:hover
+{
+    border-bottom: 1px solid #00e;
+}

@@ -1,0 +1,211 @@
+<!--
+DataProcessing week 2
+Noah van Grinsven
+10501916
+
+-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Average temperature weather data, De Bilt 2010-2011</title>
+    </head>
+    <h1>
+        Noah van Grinsven (10501916) - DataProcessing
+    </h1>
+    <h3>
+        Linegraph average Temperature
+    </h3>
+
+    <canvas id="myCanvas" height="500" width="900" solid #d3d3d3;"></canvas>
+    <body>
+        <script>
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", "KNMI_data2010.csv", true);
+            xhttp.send();
+
+            // once data is loaded start dataprocessing
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 & this.status == 200) {
+                    text = xhttp.responseText;
+
+                    var dataPerLine = text.slice(text.lastIndexOf("#")+1).replace(/260,/g, "").split("\n");
+                    dataPerLine.shift();
+
+                    // store datapoints
+                    var dateData = [];
+                    var tempData = [];
+                    var startingp = 0;
+                    var secondp;
+                    var timeUnit = 1;
+                    var timePoint;
+                    for (i = 0; i < dataPerLine.length; i++) {
+                        var splitLine = dataPerLine[i].split(",");
+                        console.log(splitLine)
+                        // store temperatures
+                        tempData.push(parseFloat(splitLine[1].trim()));
+
+                        // manipulate date data for storage
+                        var dateString = splitLine[0].trim();
+                        date = new Date(dateString.substring(0, 4), dateString.substring(4, 6) - 1, dateString.substring(6, 8));
+
+                        // create appropriate time-unit (not corrected for summer/winter time)
+                        if (dateData.length < 1) {
+                            startingp = date.getTime()
+                        } else if (dateData.length === 1) {
+                            secondp = date.getTime();
+                            timeUnit = secondp - startingp;
+                        }
+
+                        // store datapoint per time-unit
+                        timePoint = (date.getTime() - startingp) / timeUnit + 1;
+                        dateData.push(timePoint);
+                    }
+
+                    // initiate canvas
+                    var canvas = document.getElementById('myCanvas');
+                    var ctx = canvas.getContext('2d');
+                    // ctx.fillStyle="#2c354b";
+                    // ctx.fillRect(0,0,canvas.width,canvas.height);
+
+                    // useful data for graph
+                    var xAxisOffset = 25;
+                    var yAxisOffset = 25;
+                    var margin = 50;
+                    var graphRange = [0, canvas.height - xAxisOffset - 2 * margin];
+                    var graphDomain = [0, canvas.width - yAxisOffset - 2 * margin];
+
+                    // round lowest point down and highest point up to nearest 5 degree Celsius
+                    var tempLow = Math.floor(Math.min.apply(Math, tempData)/50)*50;
+                    var tempHigh = Math.ceil(Math.max.apply(Math, tempData)/50)*50;
+                    var tempRange = [tempLow, tempHigh];
+                    var dateRange = [dateData[0], dateData[dateData.length - 1]];
+
+                    // useful data for axis and gridlines
+                    var nrMonths = 12;
+                    var verGridSize = graphDomain[1]/nrMonths;
+                    var nrHorGridlines = (tempHigh - tempLow)/50;
+                    var horGridSize = (graphRange[1] - graphRange[0])/nrHorGridlines;
+
+                    // Draw horizontal grid lines
+                    for(var i = 0; i <= nrHorGridlines; i++) {
+                        ctx.beginPath();
+                        ctx.lineWidth = 1;
+
+                        // represents X-axis draw in different color
+                        if(i === 0)
+                            ctx.strokeStyle = "#000000";
+                        else
+                            ctx.strokeStyle = "#e9e9e9";
+
+                        ctx.moveTo(yAxisOffset + margin, graphRange[1] + margin - horGridSize * i);
+                        ctx.lineTo(graphDomain[1] + yAxisOffset + margin, graphRange[1] + margin - horGridSize * i);
+                        ctx.stroke();
+                    }
+
+                    // Draw vertical grid lines
+                    for(i = 0; i <= nrMonths; i++) {
+                        ctx.beginPath();
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#e9e9e9";
+
+                        // represents Y-axis draw in different color
+                        if(i === 0)
+                            ctx.strokeStyle = "#000000";
+
+                        ctx.moveTo(verGridSize * i + yAxisOffset + margin, margin);
+                        ctx.lineTo(verGridSize * i + yAxisOffset + margin, graphRange[1] + margin);
+                        ctx.stroke();
+                    }
+
+                    var months = [" ", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"]
+
+                    // Ticks marks on the X-axis
+                    for(i = 0; i <= nrMonths; i++) {
+                        ctx.beginPath();
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#000000";
+
+                        // Draw a tick mark 6px long (-3 to 3)
+                        ctx.moveTo(verGridSize * i + yAxisOffset + margin, graphRange[1]+ margin - 3);
+                        ctx.lineTo(verGridSize * i + yAxisOffset + margin, graphRange[1] + margin + 3);
+                        ctx.stroke();
+
+                        // Text value at that point
+                        ctx.font = '13px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(months[i], verGridSize * (i - 0.5) + yAxisOffset + margin, canvas.height - margin);
+                    }
+
+                    // Ticks marks on the Y-axis
+                    for(i=0; i <= (nrHorGridlines); i++) {
+                        ctx.beginPath();
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "#000000";
+
+                        // Draw a tick mark 6px long (-3 to 3)
+                        ctx.moveTo(yAxisOffset + margin - 3, graphRange[1] + margin - horGridSize * i);
+                        ctx.lineTo(yAxisOffset + margin + 3, graphRange[1] + margin - horGridSize * i);
+                        ctx.stroke();
+
+                        // Text value at that point
+                        ctx.font = '13px Arial';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(tempLow + i * 50, margin, graphRange[1] + margin - horGridSize * i + 4);
+                    }
+
+                    // get scalar
+                    var yscalar = createTransform(tempRange, graphRange);
+                    var xscalar = createTransform(dateRange, graphDomain);
+
+                    // draw graph
+                    ctx. strokeStyle = "#862627";
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(xscalar(dateData[0]) + yAxisOffset + margin, graphRange[1] + margin - yscalar(tempData[0]));
+                    for (i = 1; i < dateData.length; i++){
+                        ctx.lineTo(xscalar(dateData[i]) + yAxisOffset + margin , graphRange[1] + margin - yscalar(tempData[i]));
+                    }
+                    ctx.stroke();
+
+                    // put title and axis names in graph
+                    ctx. restore();
+                    ctx.font = "15px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Average Temperature De Bilt (2010)", 0.5*canvas.width, 0.5 * margin);
+                    ctx.font = "15px Arial";
+                    ctx.textAlign = "center";
+                    ctx.fillText("Month of the year", 0.5*canvas.width, canvas.height - 0.5 * margin)
+                    ctx.textAlign = "center";
+                    ctx.rotate(-Math.PI/2);
+                    ctx.fillText("Temperature in 1/10°C", -0.5*canvas.height, 0.5*margin);
+
+                    function createTransform(domain, range){
+                        // domain is a two-element array of the data bounds [domain_min, domain_max]
+                        // range is a two-element array of the screen bounds [range_min, range_max]
+                        // this gives you two equations to solve:
+                        // range_min = alpha * domain_min + beta
+                        // range_max = alpha * domain_max + beta
+                        // a solution would be:
+
+                        var domain_min = domain[0];
+                        var domain_max = domain[1];
+                        var range_min = range[0];
+                        var range_max = range[1];
+
+                        // formulas to calculate the alpha and the beta
+                        var alpha = (range_max - range_min) / (domain_max - domain_min);
+                        var beta = range_max - alpha * domain_max;
+
+                        // returns the function for the linear transformation (y= a * x + b)
+                        return function(x){
+                            return alpha * x + beta;
+                        }
+                    }
+                }
+            }
+
+        </script>
+    </body>
+</html>

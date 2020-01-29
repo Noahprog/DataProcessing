@@ -1,0 +1,98 @@
+/*
+Noah van Grinsven 10501916
+Dataprocessing week 3
+*/
+
+.line
+{
+    fill: none;
+    stroke-width: 2;
+}
+
+.vert_line
+{
+    stroke: grey;
+    stroke-width: 1;
+}
+
+.main_title
+{
+    font: 24px sans-serif;
+
+    text-anchor: start;
+}
+
+.subtitle
+{
+    font: 16px sans-serif;
+
+    text-anchor: start;
+}
+
+.moving_text
+{
+    font: 12px sans-serif;
+
+    alignment-baseline: hanging;
+}
+
+.axis text
+{
+    font: 12px sans-serif;
+
+    text-anchor: middle;
+}
+
+.axis .title
+{
+    font-weight: bold;
+}
+
+.axis path,
+.axis line
+{
+    fill: none;
+    stroke: #333;
+    shape-rendering: crispEdges;
+}
+
+.source
+{
+    font: 12px sans-serif;
+
+    text-anchor: end;
+}
+
+.source a
+{
+    fill: #00e;
+}
+
+.source a:hover
+{
+    text-decoration: underline;
+}
+
+.window
+{
+    pointer-events: all;
+
+    fill: none;
+}
+
+select
+{
+    position: absolute;
+}
+
+.dot
+{
+    fill: #333;
+}
+
+.legendtext
+{
+    font: 12px sans-serif;
+
+    alignment-baseline: hanging;
+}
